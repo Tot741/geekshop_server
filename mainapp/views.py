@@ -11,7 +11,7 @@ def index(request):
 
 
 def products(request):
-    with open("mainapp/fixtures/products.json", "r") as json_data:
+    with open('mainapp/fixtures/products.json', 'r') as json_data:
         catalog = load(json_data)
         catalog_list = catalog.values()
     context = {
