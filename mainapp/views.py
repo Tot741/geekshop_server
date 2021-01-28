@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from json import load
+from mainapp.models import Product, ProductCategory
 
 
 # Create your views here.
@@ -11,11 +11,9 @@ def index(request):
 
 
 def products(request):
-    with open('mainapp/fixtures/products.json', 'r') as json_data:
-        catalog = load(json_data)
-        catalog_list = catalog.values()
     context = {
         'title': 'geekshop - каталог',
-        'products': catalog_list,
+        'products': Product.objects.all(),
+        'categories': ProductCategory.objects.all()
     }
     return render(request, 'mainapp/products.html', context)
