@@ -10,10 +10,16 @@ def index(request):
     return render(request, 'mainapp/index.html', context)
 
 
-def products(request):
-    context = {
-        'title': 'geekshop - каталог',
-        'products': Product.objects.all(),
-        'categories': ProductCategory.objects.all()
-    }
+def products(request, id=None):
+    if id:
+        context = {
+            'title': 'geekshop - каталог',
+            'product': Product.objects.get(id=id)
+        }
+    else:
+        context = {
+            'title': 'geekshop - каталог',
+            'products': Product.objects.all(),
+            'categories': ProductCategory.objects.all()
+        }
     return render(request, 'mainapp/products.html', context)
