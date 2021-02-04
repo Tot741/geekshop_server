@@ -42,10 +42,11 @@ class UserRegisterForm(UserCreationForm):
         return data
 
 
-class UserEditForm(UserChangeForm):
+class UserProfileForm(UserChangeForm):
+    avatar = forms.ImageField(widget=forms.FileInput())
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password', 'age', 'avatar')
+        fields = ('username', 'email', 'first_name', 'last_name', 'age', 'avatar')
 
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
@@ -53,17 +54,14 @@ class UserEditForm(UserChangeForm):
         self.fields['email'].widget.attrs['placeholder'] = 'Введите адрес эл. почты'
         self.fields['first_name'].widget.attrs['placeholder'] = 'Введите имя'
         self.fields['last_name'].widget.attrs['placeholder'] = 'Введите фамилию'
-        self.fields['password'].widget.attrs['placeholder'] = 'Введите пароль'
         self.fields['age'].widget.attrs['placeholder'] = 'Введите возраст'
-        self.fields['avatar'].widget.attrs['placeholder'] = 'Выбирите изображение'
+        self.fields['avatar'].widget.attrs['placeholder'] = 'Выберите изображение'
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
-            if field_name == 'password':
-                field.widget = forms.HiddenInput()
-            if field_name == 'username':
-                field.widget.attrs['disabled'] = 'disabled'
-            if field_name == 'email':
-                field.widget.attrs['disabled'] = 'disabled'
+        self.fields['username'].widget.attrs['readonly'] = True
+        self.fields['email'].widget.attrs['readonly'] = True
+        self.fields['avatar'].widget.attrs['class'] = 'custom-file-input'
+
 
     def clean_age(self):
         data = self.cleaned_data['age']

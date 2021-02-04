@@ -2,8 +2,8 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth
 from django.urls import reverse
 
-from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm
-from authapp.models import User
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
+from basket.models import Basket
 
 
 def login(request):
@@ -20,7 +20,7 @@ def login(request):
         form = UserLoginForm()
     context = {
         'title': 'GeekShop - Авторизация',
-        'form': form
+        'form': form,
     }
     return render(request, 'authapp/login.html', context)
 
@@ -43,16 +43,17 @@ def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
 
-def edit(request):
+def profile(request):
     if request.method == 'POST':
-        form = UserEditForm(request.POST, request.FILES, instance=request.user)
+        form = UserProfileForm(data=request.POST, files=request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('auth:edit'))
+            return HttpResponseRedirect(reverse('auth:profile'))
     else:
-        form = UserEditForm(instance=request.user)
+        form = UserProfileForm(instance=request.user)
     context = {
-    'title': 'Geekshop - Редактирование пользователя',
-    'form': form
+    'title': 'Geekshop - Профиль',
+    'form': form,
+    'baskets': Basket.objects.filter(user=request.user),
     }
     return render(request, 'authapp/profile.html', context)
