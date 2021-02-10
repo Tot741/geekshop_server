@@ -83,3 +83,27 @@ def admin_products_create(request):
         'form': form,
     }
     return render(request, 'adminapp/admin-poducts-create.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_products_update(request, id):
+    product = Product.objects.get(id=id)
+    if request.method == 'POST':
+        form = ProductAdminCreateForm(data=request.POST, files=request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('admins:admin_products_read'))
+    else:
+        form = ProductAdminCreateForm(instance=product)
+    context = {
+        'form': form,
+        'current_product': product,
+    }
+    return render(request, 'adminapp/admin-products-update-delete.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_products_delete(request, id):
+    product = Product.objects.get(id=id)
+    product.delete()
+    return HttpResponseRedirect(reverse('admins:admin_products_read'))

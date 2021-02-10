@@ -51,7 +51,7 @@ class UserProfileForm(UserChangeForm):
 
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['placeholder'] = 'Введите имя рользователя'
+        self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
         self.fields['email'].widget.attrs['placeholder'] = 'Введите адрес эл. почты'
         self.fields['first_name'].widget.attrs['placeholder'] = 'Введите имя'
         self.fields['last_name'].widget.attrs['placeholder'] = 'Введите фамилию'

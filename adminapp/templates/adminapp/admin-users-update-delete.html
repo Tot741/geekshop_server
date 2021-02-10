@@ -50,7 +50,7 @@
                         </div>
                     </form>
                     <div class="col-lg-6" style="margin-top: 33px;">
-                        <a href="{% url 'admins:admin_users_delete' user.id %}">
+                        <a href="{% url 'admins:admin_users_delete' current_user.id %}">
                             <button class="btn btn-danger btn-block">Удалить</button>
                         </a>
                     </div>
