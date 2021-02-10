@@ -46,10 +46,13 @@
                             <div class="col-lg-6" style="margin-top: 33px;">
                                 <input class="btn btn-info btn-block" type="submit" value="Сохранить">
                             </div>
-                            <div class="col-lg-6" style="margin-top: 33px;">
-                                <input class="btn btn-danger btn-block" type="submit" value="Удалить">
-                            </div>
+
                         </div>
                     </form>
+                    <div class="col-lg-6" style="margin-top: 33px;">
+                        <a href="{% url 'admins:admin_users_delete' user.id %}">
+                            <button class="btn btn-danger btn-block">Удалить</button>
+                        </a>
+                    </div>
                 </div>
 {% endblock %}
