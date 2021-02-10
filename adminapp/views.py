@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import user_passes_test
 
 from authapp.models import User
+from mainapp.models import Product
 from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm
 
 
@@ -59,3 +60,11 @@ def admin_users_delete(request, id):
     user.is_active = False
     user.save()
     return HttpResponseRedirect(reverse('admins:admin_users_read'))
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_products_read(request):
+    context = {
+        'products': Product.objects.all(),
+    }
+    return render(request, 'adminapp/admin_products_read.html', context)
