@@ -35,15 +35,10 @@ class UserRegisterForm(UserCreationForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
 
-    def clean_age(self):
-        data = self.cleaned_data['age']
-        if data < 18:
-            raise forms.ValidationError('Вы слишком молоды!')
-        return data
 
 
 class UserProfileForm(UserChangeForm):
-    avatar = forms.ImageField(widget=forms.FileInput())
+    avatar = forms.ImageField(widget=forms.FileInput(), required=False)
 
     class Meta:
         model = User
@@ -62,9 +57,3 @@ class UserProfileForm(UserChangeForm):
         self.fields['username'].widget.attrs['readonly'] = True
         self.fields['email'].widget.attrs['readonly'] = True
         self.fields['avatar'].widget.attrs['class'] = 'custom-file-input'
-
-    def clean_age(self):
-        data = self.cleaned_data['age']
-        if data < 18:
-            raise forms.ValidationError('Вы слишком молоды!')
-        return data

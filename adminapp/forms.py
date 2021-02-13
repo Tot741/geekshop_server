@@ -18,7 +18,7 @@ class UserAdminRegisterForm(UserRegisterForm):
 
 
 class UserAdminProfileForm(UserProfileForm):
-    avatar = forms.ImageField(widget=forms.FileInput())
+    avatar = forms.ImageField(widget=forms.FileInput(), required=False)
 
     def __init__(self, *args, **kwargs):
         super(UserAdminProfileForm, self).__init__(*args, **kwargs)
@@ -27,7 +27,7 @@ class UserAdminProfileForm(UserProfileForm):
 
 
 class ProductAdminCreateForm(forms.ModelForm):
-    image = forms.ImageField(widget=forms.FileInput())
+    image = forms.ImageField(widget=forms.FileInput(), required=False)
 
     class Meta:
         model = Product
