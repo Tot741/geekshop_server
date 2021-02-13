@@ -24,7 +24,7 @@ def index(request):
 def products(request, category_id=None, page=1):
     products = Product.objects.filter(category_id=category_id) if category_id else Product.objects.all()
     per_page = 3
-    paginator = Paginator(products, per_page)
+    paginator = Paginator(products.order_by('price'), per_page)
     try:
         products_paginator = paginator.page(page)
     except PageNotAnInteger:
